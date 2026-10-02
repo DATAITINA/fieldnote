@@ -77,7 +77,8 @@ async function ensureAthleticProduct(): Promise<void> {
     },
   ];
 
-  // Prefer DB-backed cover when available; fall back to a working static cover so cards never show broken alt text
+  // Prefer DB-backed cover when available; fall back to a working static cover so cards never show broken alt text.
+  // We intentionally avoid a tiny-file guard here because a valid JPEG can still be under 1000 bytes in edge cases.
   const coverPath = `/api/covers/${ATHLETIC_ID}`;
   const fallbackCover = "/covers/athletic-physique.jpg";
 
@@ -158,10 +159,9 @@ async function ensureAthleticProduct(): Promise<void> {
     ],
   );
 
-  const coverBuf = await readFile(
-    join(process.cwd(), "public/covers/athletic-physique.jpg"),
-  ).catch(() => null);
-  if (coverBuf && coverBuf.length > 1000) {
+  const coverBuf = await readFile(join(process.cwd(), "public/covers/athletic-physique.jpg")).catch(() => null);
+
+  if (coverBuf && coverBuf.length > 0) {
     await sql.query(
       `insert into product_covers (product_id, mime, data)
        values ($1,$2,$3)
@@ -169,6 +169,8 @@ async function ensureAthleticProduct(): Promise<void> {
       [ATHLETIC_ID, "image/jpeg", coverBuf],
     );
     await sql`update products set cover_image = ${coverPath} where id = ${ATHLETIC_ID}`;
+  } else {
+    await sql`update products set cover_image = ${fallbackCover} where id = ${ATHLETIC_ID}`;
   }
 
   const pdfBuf =
