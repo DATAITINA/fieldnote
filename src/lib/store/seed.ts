@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { getSql } from "@/lib/db";
-import { DEFAULT_SETTINGS } from "./types";
 
 const PARENTING_ID = "prod_disciplined_child";
 const ATHLETIC_ID = "prod_athletic_physique";
@@ -159,9 +158,9 @@ async function ensureAthleticProduct(): Promise<void> {
     ],
   );
 
-  const coverBuf = await loadB64Asset([
-    "private/covers/athletic-physique.jpg.b64",
-  ]);
+  const coverBuf = await readFile(
+    join(process.cwd(), "public/covers/athletic-physique.jpg"),
+  ).catch(() => null);
   if (coverBuf && coverBuf.length > 1000) {
     await sql.query(
       `insert into product_covers (product_id, mime, data)
