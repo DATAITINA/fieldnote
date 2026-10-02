@@ -80,7 +80,7 @@ async function ensureAthleticProduct(): Promise<void> {
 
   // Prefer DB-backed cover when available; fall back to a working static cover so cards never show broken alt text
   const coverPath = `/api/covers/${ATHLETIC_ID}`;
-  const fallbackCover = "/covers/disciplined-child.jpg";
+  const fallbackCover = "/covers/athletic-physique.jpg";
 
   await sql.query(
     `insert into products (
