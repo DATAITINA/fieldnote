@@ -2,16 +2,24 @@ import { Link } from "@tanstack/react-router";
 import { UserButton } from "@/lib/auth/gates";
 import type { StoreSettings } from "@/lib/store/types";
 
+function CairnMark() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden>
+      {/* Three stacked stones */}
+      <ellipse cx="12" cy="18.5" rx="7" ry="2.8" />
+      <ellipse cx="12" cy="13.2" rx="5.2" ry="2.4" />
+      <ellipse cx="12" cy="8.2" rx="3.4" ry="2.1" />
+    </svg>
+  );
+}
+
 export function StoreHeader({ settings }: { settings: StoreSettings }) {
   return (
     <header className="sticky top-0 z-30 border-b border-line/80 bg-paper/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2.5">
           <span className="grid size-8 place-items-center rounded-[9px] bg-accent text-accent-fg" aria-hidden>
-            <svg viewBox="0 0 24 24" className="size-4 fill-none stroke-current" strokeWidth="1.8">
-              <path d="M7 4h8.5a3.5 3.5 0 0 1 0 7H7z" />
-              <path d="M7 11h9.2a3.3 3.3 0 0 1 0 6.6H7V4" />
-            </svg>
+            <CairnMark />
           </span>
           <span className="font-display text-xl tracking-tight">{settings.storeName}</span>
         </Link>
@@ -61,7 +69,7 @@ export function StoreFooter({ settings }: { settings: StoreSettings }) {
       </div>
       <div className="border-t border-line/80">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-muted sm:px-6">
-          <p>© {year} {settings.storeName}. Digital guides for everyday life.</p>
+          <p>© {year} {settings.storeName}. Small steps, clearly marked.</p>
           <UserButton />
         </div>
       </div>
