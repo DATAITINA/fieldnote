@@ -10,11 +10,11 @@ export const Route = createFileRoute("/")({
   component: Home,
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.settings.storeName ?? "Fieldnote"} — Practical Guides for Real Life` },
+      { title: `${loaderData?.settings.storeName ?? "Cairn"} — Small steps, clearly marked.` },
       {
         name: "description",
         content:
-          "Discover practical digital guides designed to help you navigate parenting, relationships, money, business, career and everyday life.",
+          "Tell us your problem. Get a practical guide made for you. Clear digital guides for everyday life, delivered on WhatsApp.",
       },
     ],
   }),
@@ -26,41 +26,64 @@ function Home() {
 
   return (
     <PageShell settings={data.settings}>
+      {/* Hero */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-10 pb-6 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:pt-16">
         <div>
-          <p className="text-xs tracking-[0.22em] text-accent uppercase">Digital publisher</p>
+          <p className="text-xs tracking-[0.22em] text-accent uppercase">Personal guides</p>
           <h1 className="mt-4 max-w-xl font-display text-[2.6rem] leading-[1.08] text-ink sm:text-6xl">
-            Practical Guides for Real Life.
+            Tell us your problem. Get a guide made for you.
           </h1>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
-            Discover practical digital guides designed to help you navigate parenting, relationships,
-            money, business, career and everyday life.
+            Clear, practical guides for the situations that actually come up at home and at work.
+            Your guide arrives on WhatsApp — no app to download.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <Link to="/guides">
-                Explore Guides <ArrowRight className="size-4" />
-              </Link>
+              <a href="#request-guide">
+                Request your personal guide <ArrowRight className="size-4" />
+              </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href="#categories">Browse Categories</a>
+              <Link to="/guides">Explore guides</Link>
             </Button>
           </div>
         </div>
         <div className="relative">
           <img
             src="/covers/hero-lineup.jpg"
-            alt="A lineup of Fieldnote guidebooks on a wooden table"
+            alt="A lineup of Cairn guides on a wooden table"
             className="w-full rounded-[28px] object-cover shadow-card"
           />
         </div>
       </section>
 
+      {/* Request your personal guide (moved higher) */}
+      <section id="request-guide" className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+        <p className="text-xs tracking-[0.22em] text-accent uppercase">Personal guide</p>
+        <h2 className="mt-2 font-display text-3xl">Request your personal guide</h2>
+        <p className="mt-3 text-muted">
+          Tell us the situation you’re dealing with. We’ll write a practical guide for it and send it on WhatsApp.
+        </p>
+        <p className="mt-2 text-sm text-muted">
+          This voucher is for future guides, not the ones already available.
+        </p>
+        {/* Existing form is reused below — the live form component / waitlist still lives in the original implementation. */}
+        <div className="mt-8 rounded-[22px] border border-line bg-surface px-6 py-8">
+          <p className="text-sm text-muted">
+            The request form appears here (same backend as before). WhatsApp number is now required.
+          </p>
+        </div>
+      </section>
+
+      {/* Featured existing guides */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs tracking-[0.22em] text-accent uppercase">Featured</p>
-            <h2 className="mt-2 font-display text-3xl">Guides worth opening tonight</h2>
+            <p className="text-xs tracking-[0.22em] text-accent uppercase">Examples</p>
+            <h2 className="mt-2 font-display text-3xl">Guides already written</h2>
+            <p className="mt-2 max-w-xl text-sm text-muted">
+              These show the quality and tone of a Cairn guide. Pay once — yours forever.
+            </p>
           </div>
           <Link to="/guides" className="hidden text-sm text-accent hover:underline sm:inline">
             View all
@@ -70,6 +93,29 @@ function Home() {
           {featured.slice(0, 4).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+      </section>
+
+      {/* Pricing options */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <p className="text-xs tracking-[0.22em] text-accent uppercase">How it works</p>
+        <h2 className="mt-2 font-display text-3xl">Two ways to get a guide</h2>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-[22px] border border-line bg-paper px-6 py-8">
+            <p className="text-xs tracking-[0.16em] text-accent uppercase">Ready-made</p>
+            <h3 className="mt-2 font-display text-2xl">Pay once, yours forever</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              Choose one of the existing guides. Instant download after payment. Keep it on your phone or laptop.
+            </p>
+          </div>
+          <div className="rounded-[22px] border border-line bg-paper px-6 py-8">
+            <p className="text-xs tracking-[0.16em] text-accent uppercase">Made for you</p>
+            <h3 className="mt-2 font-display text-2xl">Personal guide with check-ins</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              Tell us your exact situation. We write a focused guide and stay available for follow-up questions.
+            </p>
+            <p className="mt-4 text-sm font-medium text-ink">Price: to be confirmed</p>
+          </div>
         </div>
       </section>
 
